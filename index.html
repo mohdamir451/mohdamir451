@@ -16,139 +16,167 @@
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
 
-    <main class="app-shell">
-      <header class="hero">
-        <div>
-          <p class="eyebrow">Compliance Workspace</p>
-          <h1>UI + API PDF Comparison Module</h1>
-          <p class="subtle">
-            Premium validation interface for reviewing extracted API values against source PDF records.
-          </p>
-        </div>
-        <div class="hero-meta">
-          <span class="chip chip-live">● Live Validation</span>
-          <span class="chip">Batch ID: KYC-4821</span>
-        </div>
-      </header>
+    <div class="app-layout">
+      <aside class="left-nav">
+        <div class="brand">PDF<span>Compare</span></div>
+        <nav>
+          <a class="active" href="#">Dashboard</a>
+          <a href="#">Comparison Queue</a>
+          <a href="#">Validation Rules</a>
+          <a href="#">Audit Trail</a>
+          <a href="#">Exports</a>
+          <a href="#">Settings</a>
+        </nav>
+      </aside>
 
-      <section class="stats-grid">
-        <article class="stat-card">
-          <p>Total Fields</p>
-          <h3>18</h3>
-        </article>
-        <article class="stat-card success">
-          <p>Matched</p>
-          <h3>17</h3>
-        </article>
-        <article class="stat-card danger">
-          <p>Mismatched</p>
-          <h3>1</h3>
-        </article>
-        <article class="stat-card">
-          <p>Submission Status</p>
-          <h3>Pending Review</h3>
-        </article>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Comparison Workspace</h2>
-          <div class="segmented-control" aria-label="Layout Options">
-            <button class="active">Side by Side</button>
-            <button>Top Bottom</button>
+      <main class="app-shell">
+        <header class="top-header">
+          <div>
+            <p class="top-label">Compliance Workspace</p>
+            <h1>UI + API PDF Comparison Module</h1>
           </div>
-        </div>
+          <div class="header-actions">
+            <button class="btn btn-ghost">Profile</button>
+            <button class="btn btn-outline">Logout</button>
+          </div>
+        </header>
 
-        <div class="workspace-grid">
-          <article class="card viewer">
-            <div class="card-head">
-              <h3>PDF Viewer</h3>
-              <span>Page 1 / 3</span>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Real-time Reconciliation</p>
+            <p class="subtle">
+              Premium validation interface for reviewing extracted API values against source PDF records.
+            </p>
+          </div>
+          <div class="hero-meta">
+            <span class="chip chip-live">● Live Validation</span>
+            <span class="chip">Batch ID: KYC-4821</span>
+          </div>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card">
+            <p>Total Fields</p>
+            <h3>18</h3>
+          </article>
+          <article class="stat-card success">
+            <p>Matched</p>
+            <h3>17</h3>
+          </article>
+          <article class="stat-card danger">
+            <p>Mismatched</p>
+            <h3>1</h3>
+          </article>
+          <article class="stat-card">
+            <p>Submission Status</p>
+            <h3>Pending Review</h3>
+          </article>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Comparison Workspace</h2>
+            <div class="segmented-control" aria-label="Layout Options">
+              <button class="active">Side by Side</button>
+              <button>Top Bottom</button>
             </div>
-            <div class="viewer-body">
-              <aside class="viewer-rail">
-                <button>📄</button>
-                <button>🔎</button>
-                <button>📝</button>
-              </aside>
-              <div class="pdf-surface">
-                <div class="line w-35"></div>
-                <div class="line w-80"></div>
-                <div class="line w-75"></div>
-                <div class="line w-90"></div>
-                <div class="line w-60"></div>
-                <div class="line w-85"></div>
-                <div class="line w-55"></div>
+          </div>
+
+          <div class="workspace-grid">
+            <article class="card viewer">
+              <div class="card-head">
+                <h3>PDF Viewer</h3>
+                <span>Page 1 / 3</span>
               </div>
+              <div class="viewer-body">
+                <aside class="viewer-rail">
+                  <button>📄</button>
+                  <button>🔎</button>
+                  <button>📝</button>
+                </aside>
+                <div class="pdf-surface">
+                  <div class="line w-35"></div>
+                  <div class="line w-80"></div>
+                  <div class="line w-75"></div>
+                  <div class="line w-90"></div>
+                  <div class="line w-60"></div>
+                  <div class="line w-85"></div>
+                  <div class="line w-55"></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card form">
+              <div class="card-head">
+                <h3>Comparison Form</h3>
+                <span>Auto-check enabled</span>
+              </div>
+              <form class="field-grid">
+                <label>
+                  <span>Full Name</span>
+                  <input value="John Doe" />
+                </label>
+                <label>
+                  <span>Date of Birth</span>
+                  <input value="04/12/1990" />
+                </label>
+                <label class="state-match">
+                  <span>PAN Number</span>
+                  <input value="ABCDE1234F" />
+                  <small>Matched with API</small>
+                </label>
+                <label class="state-mismatch">
+                  <span>Address</span>
+                  <input value="Delhi" />
+                  <small>PDF value: Mumbai</small>
+                </label>
+              </form>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Field Comparison States</h2>
+          </div>
+          <div class="state-table">
+            <div class="state-row">
+              <div class="state-name">Default</div>
+              <div class="state-val">John Doe <span class="muted">↔ Enter Name</span></div>
             </div>
-          </article>
-
-          <article class="card form">
-            <div class="card-head">
-              <h3>Comparison Form</h3>
-              <span>Auto-check enabled</span>
+            <div class="state-row success">
+              <div class="state-name">Match</div>
+              <div class="state-val">DOB: 04/12/1990 <span>✅ API matched</span></div>
             </div>
-            <form class="field-grid">
-              <label>
-                <span>Full Name</span>
-                <input value="John Doe" />
-              </label>
-              <label>
-                <span>Date of Birth</span>
-                <input value="04/12/1990" />
-              </label>
-              <label class="state-match">
-                <span>PAN Number</span>
-                <input value="ABCDE1234F" />
-                <small>Matched with API</small>
-              </label>
-              <label class="state-mismatch">
-                <span>Address</span>
-                <input value="Delhi" />
-                <small>PDF value: Mumbai</small>
-              </label>
-            </form>
-          </article>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Field Comparison States</h2>
-        </div>
-        <div class="state-table">
-          <div class="state-row">
-            <div class="state-name">Default</div>
-            <div class="state-val">John Doe <span class="muted">↔ Enter Name</span></div>
+            <div class="state-row danger">
+              <div class="state-name">Mismatch</div>
+              <div class="state-val">Address: Mumbai <span>❌ Entered: Delhi</span></div>
+            </div>
           </div>
-          <div class="state-row success">
-            <div class="state-name">Match</div>
-            <div class="state-val">DOB: 04/12/1990 <span>✅ API matched</span></div>
-          </div>
-          <div class="state-row danger">
-            <div class="state-name">Mismatch</div>
-            <div class="state-val">Address: Mumbai <span>❌ Entered: Delhi</span></div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="panel">
-        <div class="panel-heading">
-          <h2>Validation &amp; Submission</h2>
-        </div>
-        <ul class="bullet-list">
-          <li>Every change triggers real-time field reconciliation.</li>
-          <li>Submission remains disabled while mismatches exist.</li>
-          <li>Upon successful submit, audit record is sealed and export is enabled.</li>
-        </ul>
-      </section>
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>Validation &amp; Submission</h2>
+          </div>
+          <ul class="bullet-list">
+            <li>Every change triggers real-time field reconciliation.</li>
+            <li>Submission remains disabled while mismatches exist.</li>
+            <li>Upon successful submit, audit record is sealed and export is enabled.</li>
+          </ul>
+        </section>
 
-      <footer class="action-bar">
-        <button class="btn btn-ghost">Cancel</button>
-        <button class="btn btn-danger">Mismatch: 1</button>
-        <button class="btn btn-primary">Submit Verification</button>
-        <button class="btn btn-outline">⬇ Download Excel</button>
-      </footer>
-    </main>
+        <footer class="action-bar">
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger">Mismatch: 1</button>
+          <button class="btn btn-primary">Submit Verification</button>
+          <button class="btn btn-outline">⬇ Download Excel</button>
+        </footer>
+
+        <footer class="page-footer">
+          © 2026 PDF Comparison Console · Secure KYC Review Workspace
+        </footer>
+      </main>
+    </div>
   </body>
 </html>

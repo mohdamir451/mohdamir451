@@ -53,6 +53,8 @@
         </div>
     </div>
 
+    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Users" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    {
     <div class="modal-backdrop" id="inviteModal" hidden>
         <div class="modal-card">
             <h3>Invite Team Member</h3>
@@ -71,6 +73,7 @@
             </div>
         </div>
     </div>
+    }
 
     <script src="~/js/dashboard.js" asp-append-version="true"></script>
 </body>

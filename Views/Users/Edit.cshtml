@@ -3,7 +3,10 @@
     ViewData["Title"] = "Edit User";
 }
 
-<section class="form-card">
-    <h1>Edit User</h1>
+<section class="card form-card premium">
+    <div class="section-header">
+        <h2>Edit User</h2>
+        <a asp-action="Index" class="btn btn-outline">Back to List</a>
+    </div>
     <partial name="_UserForm" model="Model" />
 </section>

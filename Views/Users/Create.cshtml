@@ -1,9 +1,12 @@
 @model UserUpsertRequest
 @{
-    ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Add User";
 }
 
-<section class="form-card">
-    <h1>Add User</h1>
+<section class="card form-card premium">
+    <div class="section-header">
+        <h2>Add User</h2>
+        <a asp-action="Index" class="btn btn-outline">Back to List</a>
+    </div>
     <partial name="_UserForm" model="Model" />
 </section>

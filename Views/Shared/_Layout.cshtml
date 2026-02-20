@@ -4,21 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PDF Comparison Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="top-nav">
-        <div class="top-nav-title">PDF Comparison Admin</div>
-        <div class="top-nav-actions">
-            <a asp-controller="Users" asp-action="Index">Users</a>
-            <a asp-controller="Auth" asp-action="Login">Login</a>
-            <form asp-controller="Auth" asp-action="Logout" method="post">
-                <button type="submit">Logout</button>
-            </form>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="logo">PDF<span>Compare</span></div>
+            <nav class="sidebar-nav">
+                <a asp-controller="Users" asp-action="Index">User Management</a>
+                <a asp-controller="Users" asp-action="Create">Add User</a>
+                <a asp-controller="Auth" asp-action="Login">Login</a>
+            </nav>
+        </aside>
+
+        <div class="main-wrap">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Admin Console</p>
+                    <h1>Authentication & User Management</h1>
+                </div>
+                <div class="topbar-actions">
+                    <a class="action-link" asp-controller="Users" asp-action="Index">Profile</a>
+                    <form asp-controller="Auth" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-ghost">Logout</button>
+                    </form>
+                </div>
+            </header>
+
+            <main class="page-content">
+                @RenderBody()
+            </main>
         </div>
-    </header>
-    <main class="container">
-        @RenderBody()
-    </main>
+    </div>
 </body>
 </html>

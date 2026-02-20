@@ -1,32 +1,38 @@
 @model LoginRequest
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Secure Login";
 }
 
-<section class="auth-card">
-    <h1>Secure Login</h1>
-    <p class="muted">Sign in with username/email and password.</p>
+<section class="card auth-card premium">
+    <div class="section-header">
+        <h2>Secure Login</h2>
+        <span class="chip">JWT Enabled</span>
+    </div>
+    <p class="muted">Sign in with Username/Email and Password.</p>
 
     @if (TempData["LogoutSuccess"] is string logoutMessage)
     {
         <div class="alert success">@logoutMessage</div>
     }
 
-    <form asp-action="Login" method="post" class="auth-form">
+    <form asp-action="Login" method="post" class="form-grid">
         <div asp-validation-summary="ModelOnly" class="alert error"></div>
+
         <label>
             Username / Email
-            <input asp-for="UserNameOrEmail" required />
+            <input asp-for="UserNameOrEmail" placeholder="admin or admin@pdfcompare.local" required />
         </label>
+
         <label>
             Password
-            <input asp-for="Password" type="password" required />
+            <input asp-for="Password" type="password" placeholder="••••••••" required />
         </label>
-        <button type="submit">Login</button>
+
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
-    <div class="note">
-        Demo users: <strong>admin</strong> / <strong>Admin@@123</strong> and
-        <strong>reviewer</strong> / <strong>Reviewer@@123</strong>.
-    </div>
+    <p class="note">
+        Demo users: <strong>admin</strong> / <strong>Admin@123</strong> and
+        <strong>reviewer</strong> / <strong>Reviewer@123</strong>.
+    </p>
 </section>

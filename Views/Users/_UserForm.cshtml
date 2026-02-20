@@ -1,29 +1,35 @@
 @model UserUpsertRequest
 
-<form method="post" class="edit-form">
+<form method="post" class="form-grid">
     <div asp-validation-summary="ModelOnly" class="alert error"></div>
+
     <label>
         User Name
         <input asp-for="UserName" required />
     </label>
+
     <label>
         Email
         <input asp-for="Email" type="email" required />
     </label>
+
     <label>
         Password (required for create)
         <input asp-for="Password" type="password" />
     </label>
+
     <label>
         Role
         <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()"></select>
     </label>
-    <label class="checkbox">
-        <input asp-for="IsActive" type="checkbox" /> Active
+
+    <label class="checkbox-row">
+        <input asp-for="IsActive" type="checkbox" />
+        <span>Active</span>
     </label>
 
     <div class="form-actions">
-        <button type="submit">Save</button>
-        <a asp-action="Index">Back</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-outline">Cancel</a>
     </div>
 </form>

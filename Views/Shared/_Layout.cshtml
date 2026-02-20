@@ -3,44 +3,75 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PDF Comparison Admin</title>
+    <title>@ViewData["Title"] - Enterprise Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="bg-orb orb-a"></div>
-    <div class="bg-orb orb-b"></div>
-
-    <div class="shell">
-        <aside class="sidebar">
-            <div class="logo">PDF<span>Compare</span></div>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-head">
+                <button id="sidebarToggle" class="icon-btn" aria-label="Toggle sidebar">☰</button>
+                <div class="brand">Pulse<span>Ops</span></div>
+            </div>
             <nav class="sidebar-nav">
-                <a asp-controller="Users" asp-action="Index">User Management</a>
-                <a asp-controller="Users" asp-action="Create">Add User</a>
-                <a asp-controller="Auth" asp-action="Login">Login</a>
+                <a class="active" asp-controller="Users" asp-action="Index"><span>🏠</span><span class="label">Dashboard</span></a>
+                <a asp-controller="Users" asp-action="Create"><span>➕</span><span class="label">Create User</span></a>
+                <a href="#analytics"><span>📈</span><span class="label">Analytics</span></a>
+                <a href="#users"><span>👥</span><span class="label">Users</span></a>
+                <a href="#activity"><span>🕘</span><span class="label">Activity</span></a>
+                <a asp-controller="Auth" asp-action="Login"><span>🔐</span><span class="label">Auth</span></a>
             </nav>
         </aside>
 
-        <div class="main-wrap">
+        <div class="workspace">
             <header class="topbar">
-                <div>
-                    <p class="eyebrow">Admin Console</p>
-                    <h1>Authentication & User Management</h1>
+                <div class="search-wrap">
+                    <span>⌕</span>
+                    <input type="text" placeholder="Search users, metrics, activity..." />
                 </div>
-                <div class="topbar-actions">
-                    <a class="action-link" asp-controller="Users" asp-action="Index">Profile</a>
-                    <form asp-controller="Auth" asp-action="Logout" method="post">
-                        <button type="submit" class="btn btn-ghost">Logout</button>
-                    </form>
+
+                <div class="top-actions">
+                    <button class="icon-btn glow">🔔</button>
+                    <button class="icon-btn">⚙️</button>
+                    <details class="profile-dropdown">
+                        <summary>👤 Admin ▾</summary>
+                        <div class="dropdown-menu">
+                            <a asp-controller="Users" asp-action="Index">Profile</a>
+                            <a asp-controller="Users" asp-action="Create">Manage Team</a>
+                            <form asp-controller="Auth" asp-action="Logout" method="post">
+                                <button type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </details>
                 </div>
             </header>
 
-            <main class="page-content">
-                @RenderBody()
-            </main>
+            <main class="content">@RenderBody()</main>
         </div>
     </div>
+
+    <div class="modal-backdrop" id="inviteModal" hidden>
+        <div class="modal-card">
+            <h3>Invite Team Member</h3>
+            <p class="muted">Send a secure invite and assign a role instantly.</p>
+            <label>Email<input type="email" placeholder="name@company.com" /></label>
+            <label>Role
+                <select>
+                    <option>Reviewer</option>
+                    <option>User</option>
+                    <option>Admin</option>
+                </select>
+            </label>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" data-close-modal="inviteModal">Cancel</button>
+                <button class="btn btn-primary">Send Invite</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
 </body>
 </html>

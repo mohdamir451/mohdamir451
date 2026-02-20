@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PDF Comparison Admin</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="top-nav">
+        <div class="top-nav-title">PDF Comparison Admin</div>
+        <div class="top-nav-actions">
+            <a asp-controller="Users" asp-action="Index">Users</a>
+            <a asp-controller="Auth" asp-action="Login">Login</a>
+            <form asp-controller="Auth" asp-action="Logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </header>
+    <main class="container">
+        @RenderBody()
+    </main>
+</body>
+</html>

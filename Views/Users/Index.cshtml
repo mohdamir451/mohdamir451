@@ -1,0 +1,49 @@
+@model IReadOnlyCollection<AppUser>
+@{
+    ViewData["Title"] = "User List";
+}
+
+<section class="list-card">
+    <div class="header-row">
+        <h1>User Management</h1>
+        <a asp-action="Create" class="button-link">Add User</a>
+    </div>
+
+    @if (TempData["LoginSuccess"] is string successMessage)
+    {
+        <div class="alert success">@successMessage</div>
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>@(user.IsActive ? "Active" : "Disabled")</td>
+                <td>@user.CreatedBy<br /><span class="muted">@user.CreatedDate.ToString("u")</span></td>
+                <td>@user.ModifiedBy<br /><span class="muted">@user.ModifiedDate.ToString("u")</span></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                    <form asp-action="ToggleStatus" asp-route-id="@user.Id" method="post" class="inline-form">
+                        <button type="submit">@(user.IsActive ? "Disable" : "Enable")</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

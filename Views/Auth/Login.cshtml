@@ -1,0 +1,32 @@
+@model LoginRequest
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="auth-card">
+    <h1>Secure Login</h1>
+    <p class="muted">Sign in with username/email and password.</p>
+
+    @if (TempData["LogoutSuccess"] is string logoutMessage)
+    {
+        <div class="alert success">@logoutMessage</div>
+    }
+
+    <form asp-action="Login" method="post" class="auth-form">
+        <div asp-validation-summary="ModelOnly" class="alert error"></div>
+        <label>
+            Username / Email
+            <input asp-for="UserNameOrEmail" required />
+        </label>
+        <label>
+            Password
+            <input asp-for="Password" type="password" required />
+        </label>
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="note">
+        Demo users: <strong>admin</strong> / <strong>Admin@@123</strong> and
+        <strong>reviewer</strong> / <strong>Reviewer@@123</strong>.
+    </div>
+</section>

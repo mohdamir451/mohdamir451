@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+  background: #f3f6fb;
+  color: #1f2937;
+}
+
+.top-nav {
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+}
+
+.top-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.top-nav a,
+.top-nav button {
+  color: #fff;
+  background: transparent;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 1.25rem auto;
+  padding: 0 1rem;
+}
+
+.auth-card,
+.list-card,
+.form-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.auth-form,
+.edit-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+input,
+select,
+button {
+  height: 2.2rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0 0.6rem;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.alert {
+  padding: 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.alert.success {
+  background: #ecfdf3;
+  border: 1px solid #86efac;
+}
+
+.alert.error {
+  background: #fff1f2;
+  border: 1px solid #fda4af;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-link {
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+}
+
+th,
+td {
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.55rem;
+  vertical-align: top;
+}
+
+.inline-form {
+  display: inline;
+  margin-left: 0.4rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.form-actions a {
+  color: #334155;
+}
+
+.muted,
+.note {
+  color: #64748b;
+  font-size: 0.85rem;
+}

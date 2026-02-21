@@ -1,35 +1,37 @@
 @model UserUpsertRequest
 
-<form method="post" class="form-grid">
+<form method="post" class="user-form">
     <div asp-validation-summary="ModelOnly" class="alert error"></div>
 
-    <label>
-        User Name
-        <input asp-for="UserName" required />
-    </label>
+    <div class="user-form-grid">
+        <div class="user-field">
+            <label asp-for="UserName">User Name</label>
+            <input asp-for="UserName" required />
+        </div>
 
-    <label>
-        Email
-        <input asp-for="Email" type="email" required />
-    </label>
+        <div class="user-field">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" type="email" required />
+        </div>
 
-    <label>
-        Password (required for create)
-        <input asp-for="Password" type="password" />
-    </label>
+        <div class="user-field">
+            <label asp-for="Password">Password <span class="muted">(required for create)</span></label>
+            <input asp-for="Password" type="password" />
+        </div>
 
-    <label>
-        Role
-        <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()"></select>
-    </label>
+        <div class="user-field">
+            <label asp-for="Role">Role</label>
+            <select asp-for="Role" asp-items="Html.GetEnumSelectList<UserRole>()"></select>
+        </div>
+    </div>
 
-    <label class="checkbox-row">
+    <label class="checkbox-row user-active-row">
         <input asp-for="IsActive" type="checkbox" />
         <span>Active</span>
     </label>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Save</button>
+    <div class="form-actions user-form-actions">
+        <button type="submit" class="btn btn-primary">Save User</button>
         <a asp-action="Index" class="btn btn-outline">Cancel</a>
     </div>
 </form>

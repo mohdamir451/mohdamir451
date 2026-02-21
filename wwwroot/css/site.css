@@ -540,3 +540,50 @@ th, td {
 .modal-backdrop[hidden] {
   display: none !important;
 }
+
+.user-editor {
+  padding: 1.15rem;
+}
+
+.user-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.user-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .95rem;
+}
+
+.user-field {
+  display: grid;
+  gap: .38rem;
+}
+
+.user-field label {
+  font-size: .95rem;
+  font-weight: 700;
+  color: #dbe4f6;
+}
+
+.user-field input,
+.user-field select {
+  width: 100%;
+  height: 44px;
+}
+
+.user-active-row {
+  width: fit-content;
+  margin-top: -.2rem;
+}
+
+.user-form-actions {
+  margin-top: .2rem;
+}
+
+@media (max-width: 980px) {
+  .user-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

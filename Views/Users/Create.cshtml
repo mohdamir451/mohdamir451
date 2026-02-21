@@ -3,9 +3,12 @@
     ViewData["Title"] = "Add User";
 }
 
-<section class="card form-card premium">
+<section class="card form-card user-editor premium" id="users">
     <div class="section-header">
-        <h2>Add User</h2>
+        <div>
+            <h2>Add User</h2>
+            <p class="muted">Create a new user account with role assignment and activation status.</p>
+        </div>
         <a asp-action="Index" class="btn btn-outline">Back to List</a>
     </div>
     <partial name="_UserForm" model="Model" />

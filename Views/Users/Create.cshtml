@@ -3,13 +3,25 @@
     ViewData["Title"] = "Add User";
 }
 
-<section class="card form-card user-editor premium" id="users">
-    <div class="section-header">
-        <div>
-            <h2>Add User</h2>
-            <p class="muted">Create a new user account with role assignment and activation status.</p>
+<section class="user-page-grid" id="users">
+    <article class="card form-card user-editor premium">
+        <div class="section-header">
+            <div>
+                <h2>Add User</h2>
+                <p class="muted">Create a new user account with role assignment and activation status.</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline">Back to List</a>
         </div>
-        <a asp-action="Index" class="btn btn-outline">Back to List</a>
-    </div>
-    <partial name="_UserForm" model="Model" />
+        <partial name="_UserForm" model="Model" />
+    </article>
+
+    <aside class="glass-card helper-card">
+        <h3>Best Practices</h3>
+        <ul>
+            <li>Use a unique corporate email for each account.</li>
+            <li>Assign <strong>Reviewer</strong> for KYC verification tasks.</li>
+            <li>Only assign <strong>Admin</strong> role when necessary.</li>
+            <li>Keep inactive users disabled for audit safety.</li>
+        </ul>
+    </aside>
 </section>

@@ -1,3 +1,9 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
+    var isUsersIndex = currentController == "Users" && currentAction == "Index";
+    var isUsersCreate = currentController == "Users" && currentAction == "Create";
+}
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,8 +23,8 @@
                 <div class="brand">Pulse<span>Ops</span></div>
             </div>
             <nav class="sidebar-nav">
-                <a class="active" asp-controller="Users" asp-action="Index"><span>🏠</span><span class="label">Dashboard</span></a>
-                <a asp-controller="Users" asp-action="Create"><span>➕</span><span class="label">Create User</span></a>
+                <a class="@(isUsersIndex ? "active" : "")" asp-controller="Users" asp-action="Index"><span>🏠</span><span class="label">Dashboard</span></a>
+                <a class="@(isUsersCreate ? "active" : "")" asp-controller="Users" asp-action="Create"><span>➕</span><span class="label">Create User</span></a>
                 <a href="#analytics"><span>📈</span><span class="label">Analytics</span></a>
                 <a href="#users"><span>👥</span><span class="label">Users</span></a>
                 <a href="#activity"><span>🕘</span><span class="label">Activity</span></a>
@@ -53,7 +59,7 @@
         </div>
     </div>
 
-    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Users" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    @if (isUsersIndex)
     {
     <div class="modal-backdrop" id="inviteModal" hidden>
         <div class="modal-card">

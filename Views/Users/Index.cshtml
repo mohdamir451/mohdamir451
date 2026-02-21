@@ -1,4 +1,4 @@
-@model IReadOnlyCollection<AppUser>
+@model UsersDashboardViewModel
 @{
     ViewData["Title"] = "Enterprise Dashboard";
 }
@@ -11,24 +11,24 @@
     </div>
     <div class="head-actions">
         <button type="button" class="btn btn-ghost" data-open-modal="inviteModal">Invite Member</button>
-        <a asp-action="Create" class="btn btn-primary">Create User</a>
+        <a href="#create-user" class="btn btn-primary">Create User</a>
     </div>
 </section>
 
 <section class="kpi-grid" id="analytics">
     <article class="kpi-card">
         <p>Total Users</p>
-        <h3>@Model.Count</h3>
+        <h3>@Model.Users.Count</h3>
         <span class="trend up">+12.4%</span>
     </article>
     <article class="kpi-card">
         <p>Active Sessions</p>
-        <h3>@Model.Count(x => x.IsActive)</h3>
+        <h3>@Model.Users.Count(x => x.IsActive)</h3>
         <span class="trend up">+6.8%</span>
     </article>
     <article class="kpi-card">
         <p>Disabled Accounts</p>
-        <h3>@Model.Count(x => !x.IsActive)</h3>
+        <h3>@Model.Users.Count(x => !x.IsActive)</h3>
         <span class="trend down">-1.2%</span>
     </article>
     <article class="kpi-card">
@@ -36,6 +36,28 @@
         <h3>98.2%</h3>
         <span class="trend up">+0.6%</span>
     </article>
+</section>
+
+<section class="user-page-grid" id="create-user">
+    <article class="card form-card user-editor premium">
+        <div class="section-header">
+            <div>
+                <h2>Create User</h2>
+                <p class="muted">Add a new user directly from the dashboard.</p>
+            </div>
+        </div>
+        <partial name="_UserForm" model="Model.NewUser" />
+    </article>
+
+    <aside class="glass-card helper-card">
+        <h3>Quick Guidelines</h3>
+        <ul>
+            <li>Use unique corporate email addresses.</li>
+            <li>Assign the least-privileged role required.</li>
+            <li>Keep inactive users disabled for audit compliance.</li>
+            <li>Use Reviewer role for verification operations.</li>
+        </ul>
+    </aside>
 </section>
 
 <section class="charts-grid">
@@ -100,7 +122,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var user in Model)
+            @foreach (var user in Model.Users)
             {
                 <tr>
                     <td>
@@ -133,7 +155,7 @@
     </div>
 
     <div class="pagination-row">
-        <span class="muted">Showing @Model.Count users</span>
+        <span class="muted">Showing @Model.Users.Count users</span>
         <div>
             <button class="btn btn-outline">Previous</button>
             <button class="btn btn-primary">1</button>

@@ -16,18 +16,14 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
     public async Task<IActionResult> Index()
     {
         var users = await db.Users.OrderByDescending(x => x.CreatedDate).ToListAsync();
-        return View(new UsersDashboardViewModel
-        {
-            Users = users,
-            NewUser = new UserUpsertRequest { IsActive = true }
-        });
+        return View(users);
     }
 
     [AllowAnonymous]
     [HttpGet]
     public IActionResult Create()
     {
-        return RedirectToAction(nameof(Index), new { section = "create-user" });
+        return View(new UserUpsertRequest { IsActive = true });
     }
 
     [AllowAnonymous]
@@ -42,12 +38,7 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
 
         if (!ModelState.IsValid)
         {
-            var users = await db.Users.OrderByDescending(x => x.CreatedDate).ToListAsync();
-            return View(nameof(Index), new UsersDashboardViewModel
-            {
-                Users = users,
-                NewUser = request
-            });
+            return View(request);
         }
 
         var now = DateTime.UtcNow;
@@ -69,7 +60,7 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         db.Users.Add(user);
         await db.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Index), new { section = "users" });
+        return RedirectToAction(nameof(Index));
     }
 
     [AllowAnonymous]
@@ -116,7 +107,7 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         user.ModifiedDate = DateTime.UtcNow;
 
         await db.SaveChangesAsync();
-        return RedirectToAction(nameof(Index), new { section = "users" });
+        return RedirectToAction(nameof(Index));
     }
 
     [AllowAnonymous]
@@ -135,6 +126,6 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         user.ModifiedDate = DateTime.UtcNow;
         await db.SaveChangesAsync();
 
-        return RedirectToAction(nameof(Index), new { section = "users" });
+        return RedirectToAction(nameof(Index));
     }
 }

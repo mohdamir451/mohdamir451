@@ -511,3 +511,28 @@ th, td {
     padding: 1.2rem;
   }
 }
+
+.alert {
+  border-radius: 10px;
+  padding: .6rem .75rem;
+  border: 1px solid transparent;
+  font-size: .92rem;
+}
+
+.alert.success {
+  color: #86efac;
+  background: rgba(34,197,94,.14);
+  border-color: rgba(34,197,94,.35);
+}
+
+.alert.error,
+.alert.error *,
+.validation-summary-errors,
+.validation-summary-errors * {
+  color: #f87171 !important;
+}
+
+.alert.error {
+  background: rgba(239,68,68,.12);
+  border-color: rgba(239,68,68,.35);
+}

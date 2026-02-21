@@ -536,3 +536,7 @@ th, td {
   background: rgba(239,68,68,.12);
   border-color: rgba(239,68,68,.35);
 }
+
+.modal-backdrop[hidden] {
+  display: none !important;
+}

@@ -1,7 +1,13 @@
 (() => {
   const sidebar = document.getElementById('sidebar');
   const sidebarToggle = document.getElementById('sidebarToggle');
-  const modal = document.getElementById('inviteModal');
+
+  const setModalVisibility = (id, isVisible) => {
+    if (!id) return;
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.hidden = !isVisible;
+  };
 
   if (sidebarToggle && sidebar) {
     sidebarToggle.addEventListener('click', () => {
@@ -9,31 +15,32 @@
     });
   }
 
-  document.querySelectorAll('[data-open-modal]').forEach(button => {
-    button.addEventListener('click', () => {
-      const target = button.getAttribute('data-open-modal');
-      const element = target ? document.getElementById(target) : null;
-      if (element) {
-        element.hidden = false;
-      }
-    });
+  document.addEventListener('click', (event) => {
+    const openTrigger = event.target.closest('[data-open-modal]');
+    if (openTrigger) {
+      event.preventDefault();
+      setModalVisibility(openTrigger.getAttribute('data-open-modal'), true);
+      return;
+    }
+
+    const closeTrigger = event.target.closest('[data-close-modal]');
+    if (closeTrigger) {
+      event.preventDefault();
+      setModalVisibility(closeTrigger.getAttribute('data-close-modal'), false);
+      return;
+    }
+
+    const backdrop = event.target.closest('.modal-backdrop');
+    if (backdrop && event.target === backdrop) {
+      backdrop.hidden = true;
+    }
   });
 
-  document.querySelectorAll('[data-close-modal]').forEach(button => {
-    button.addEventListener('click', () => {
-      const target = button.getAttribute('data-close-modal');
-      const element = target ? document.getElementById(target) : null;
-      if (element) {
-        element.hidden = true;
-      }
-    });
-  });
-
-  if (modal) {
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) {
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop:not([hidden])').forEach((modal) => {
         modal.hidden = true;
-      }
-    });
-  }
+      });
+    }
+  });
 })();

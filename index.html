@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PDF Comparison Verification</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f6f8fb; color: #1f2937; }
+    .container { max-width: 900px; margin: 2rem auto; background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+    h1 { margin-top: 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+    label { display: block; font-size: .875rem; margin-bottom: .35rem; }
+    input, select, textarea { width: 100%; box-sizing: border-box; padding: .6rem .7rem; border: 1px solid #cbd5e1; border-radius: 8px; }
+    .full { grid-column: 1 / -1; }
+    .footer { margin-top: 2rem; display: flex; justify-content: flex-end; border-top: 1px solid #e5e7eb; padding-top: 1rem; }
+    button { background: #2563eb; color: #fff; border: 0; border-radius: 8px; padding: .7rem 1.1rem; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Comparison Verification</h1>
+    <p>Submit both source and target metadata for verification.</p>
+
+    <form id="comparison-form" method="post" action="/api/comparisons/verify">
+      <div class="grid">
+        <div>
+          <label for="sourceDocument">Source Document</label>
+          <input id="sourceDocument" name="sourceDocument" type="text" required />
+        </div>
+        <div>
+          <label for="targetDocument">Target Document</label>
+          <input id="targetDocument" name="targetDocument" type="text" required />
+        </div>
+        <div>
+          <label for="sourceVersion">Source Version</label>
+          <input id="sourceVersion" name="sourceVersion" type="text" required />
+        </div>
+        <div>
+          <label for="targetVersion">Target Version</label>
+          <input id="targetVersion" name="targetVersion" type="text" required />
+        </div>
+        <div>
+          <label for="comparisonType">Comparison Type</label>
+          <select id="comparisonType" name="comparisonType" required>
+            <option value="visual">Visual</option>
+            <option value="text">Text</option>
+            <option value="hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div>
+          <label for="requestedBy">Requested By</label>
+          <input id="requestedBy" name="requestedBy" type="email" required />
+        </div>
+        <div class="full">
+          <label for="notes">Verification Notes</label>
+          <textarea id="notes" name="notes" rows="3"></textarea>
+        </div>
+      </div>
+    </form>
+
+    <footer class="footer">
+      <button type="submit" form="comparison-form">Submit Verification</button>
+    </footer>
+  </div>
+</body>
+</html>

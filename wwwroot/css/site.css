@@ -642,3 +642,6 @@ th, td {
     grid-template-columns: 1fr;
   }
 }
+
+.field-error { color: #fda4af; font-size: .8rem; display: block; margin-top: .25rem; }
+

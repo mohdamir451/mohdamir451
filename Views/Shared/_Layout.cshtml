@@ -28,6 +28,7 @@
                 <a href="#analytics"><span>📈</span><span class="label">Analytics</span></a>
                 <a href="#users"><span>👥</span><span class="label">Users</span></a>
                 <a href="#activity"><span>🕘</span><span class="label">Activity</span></a>
+                <a asp-controller="Comparison" asp-action="Index"><span>🧾</span><span class="label">PDF Compare</span></a>
                 <a asp-controller="Auth" asp-action="Login"><span>🔐</span><span class="label">Auth</span></a>
             </nav>
         </aside>
@@ -43,11 +44,12 @@
                     <button class="icon-btn glow">🔔</button>
                     <button class="icon-btn">⚙️</button>
                     <details class="profile-dropdown">
-                        <summary>👤 Admin ▾</summary>
+                        <summary>👤 @(User.Identity?.Name ?? "Admin") ▾</summary>
                         <div class="dropdown-menu">
                             <a asp-controller="Users" asp-action="Index">Profile</a>
                             <a asp-controller="Users" asp-action="Create">Manage Team</a>
                             <form asp-controller="Auth" asp-action="Logout" method="post">
+                                @Html.AntiForgeryToken()
                                 <button type="submit">Logout</button>
                             </form>
                         </div>

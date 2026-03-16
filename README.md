@@ -1,0 +1,38 @@
+# PDF Comparison UI - ASP.NET Core 8 (Authentication & User Management)
+
+This project provides an ASP.NET Core 8 starter implementation for:
+
+- Login & JWT-based authentication
+- Password hashing and secure storage
+- Logout/session handling
+- User management module (create/edit/disable users)
+- Role assignment (Admin, Reviewer, User)
+- RBAC policies and audit fields
+- UI screens for login, invalid login state, user list, add/edit user
+
+## Tech
+
+- ASP.NET Core 8 MVC + API endpoints
+- Entity Framework Core InMemory (demo)
+- JWT bearer auth
+
+## Run (when .NET 8 SDK is available)
+
+```bash
+dotnet restore
+dotnet run
+```
+
+Default route:
+
+- `/Auth/Login`
+
+Demo seeded users:
+
+- `admin` / `Admin@123`
+- `reviewer` / `Reviewer@123`
+
+API login endpoint:
+
+- `POST /api/auth/login`
+

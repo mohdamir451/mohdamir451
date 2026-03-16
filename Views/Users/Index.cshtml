@@ -1,0 +1,153 @@
+@model IReadOnlyCollection<AppUser>
+@{
+    ViewData["Title"] = "Enterprise Dashboard";
+}
+
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">Enterprise Control Center</p>
+        <h1>Admin Dashboard</h1>
+        <p class="muted">Real-time visibility into authentication, user lifecycle, and operational health.</p>
+    </div>
+    <div class="head-actions">
+        <button type="button" class="btn btn-ghost" data-open-modal="inviteModal">Invite Member</button>
+        <a asp-action="Create" class="btn btn-primary">Create User</a>
+    </div>
+</section>
+
+<section class="kpi-grid" id="analytics">
+    <article class="kpi-card">
+        <p>Total Users</p>
+        <h3>@Model.Count</h3>
+        <span class="trend up">+12.4%</span>
+    </article>
+    <article class="kpi-card">
+        <p>Active Sessions</p>
+        <h3>@Model.Count(x => x.IsActive)</h3>
+        <span class="trend up">+6.8%</span>
+    </article>
+    <article class="kpi-card">
+        <p>Disabled Accounts</p>
+        <h3>@Model.Count(x => !x.IsActive)</h3>
+        <span class="trend down">-1.2%</span>
+    </article>
+    <article class="kpi-card">
+        <p>Auth Success Rate</p>
+        <h3>98.2%</h3>
+        <span class="trend up">+0.6%</span>
+    </article>
+</section>
+
+<section class="charts-grid">
+    <article class="glass-card chart-card">
+        <div class="card-title-row"><h3>Login Trends (30 Days)</h3><span class="chip">Line</span></div>
+        <svg viewBox="0 0 600 220" class="line-chart chart-animate">
+            <polyline points="20,180 90,150 160,165 230,120 300,130 370,90 440,100 510,70 580,50" />
+        </svg>
+    </article>
+
+    <article class="glass-card chart-card">
+        <div class="card-title-row"><h3>Role Distribution</h3><span class="chip">Donut</span></div>
+        <div class="donut-wrap chart-animate">
+            <div class="donut"></div>
+            <ul>
+                <li><span class="dot admin"></span>Admin 14%</li>
+                <li><span class="dot reviewer"></span>Reviewer 46%</li>
+                <li><span class="dot user"></span>User 40%</li>
+            </ul>
+        </div>
+    </article>
+
+    <article class="glass-card chart-card wide">
+        <div class="card-title-row"><h3>Weekly Actions</h3><span class="chip">Bar</span></div>
+        <div class="bars chart-animate">
+            <div style="--h:45%"></div>
+            <div style="--h:62%"></div>
+            <div style="--h:57%"></div>
+            <div style="--h:70%"></div>
+            <div style="--h:82%"></div>
+            <div style="--h:66%"></div>
+            <div style="--h:90%"></div>
+        </div>
+    </article>
+</section>
+
+<section class="glass-card" id="users">
+    <div class="table-toolbar">
+        <h3>Users Directory</h3>
+        <div class="toolbar-actions">
+            <select>
+                <option>All Roles</option>
+                <option>Admin</option>
+                <option>Reviewer</option>
+                <option>User</option>
+            </select>
+            <input type="text" placeholder="Filter users..." />
+            <button class="btn btn-outline">Export</button>
+        </div>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <strong>@user.UserName</strong><br />
+                        <span class="muted">@user.Email</span>
+                    </td>
+                    <td><span class="role-pill">@user.Role</span></td>
+                    <td>
+                        @if (user.IsActive)
+                        {
+                            <span class="status-pill active">Active</span>
+                        }
+                        else
+                        {
+                            <span class="status-pill disabled">Disabled</span>
+                        }
+                    </td>
+                    <td>@user.CreatedBy<br /><span class="muted">@user.CreatedDate.ToString("u")</span></td>
+                    <td>@user.ModifiedBy<br /><span class="muted">@user.ModifiedDate.ToString("u")</span></td>
+                    <td class="actions-cell">
+                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-outline">Edit</a>
+                        <form asp-action="ToggleStatus" asp-route-id="@user.Id" method="post" class="inline-form">
+                            <button type="submit" class="btn btn-ghost">@(user.IsActive ? "Disable" : "Enable")</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-row">
+        <span class="muted">Showing @Model.Count users</span>
+        <div>
+            <button class="btn btn-outline">Previous</button>
+            <button class="btn btn-primary">1</button>
+            <button class="btn btn-outline">2</button>
+            <button class="btn btn-outline">Next</button>
+        </div>
+    </div>
+</section>
+
+<section class="glass-card timeline" id="activity">
+    <h3>Recent Activity Timeline</h3>
+    <div class="timeline-list">
+        <article><span></span><div><strong>User account updated</strong><p class="muted">Admin changed reviewer role · 10 mins ago</p></div></article>
+        <article><span></span><div><strong>New login policy enabled</strong><p class="muted">JWT expiry reduced to 30m · 45 mins ago</p></div></article>
+        <article><span></span><div><strong>Three users invited</strong><p class="muted">Operations batch onboarding · 2 hours ago</p></div></article>
+    </div>
+</section>

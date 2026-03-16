@@ -1,0 +1,26 @@
+@model UserUpsertRequest
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<section class="user-page-grid" id="users">
+    <article class="card form-card user-editor premium">
+        <div class="section-header">
+            <div>
+                <h2>Edit User</h2>
+                <p class="muted">Update account details, role, and active status.</p>
+            </div>
+            <a asp-action="Index" class="btn btn-outline">Back to List</a>
+        </div>
+        <partial name="_UserForm" model="Model" />
+    </article>
+
+    <aside class="glass-card helper-card">
+        <h3>Change Checklist</h3>
+        <ul>
+            <li>Verify identity before role changes.</li>
+            <li>Leave password blank to keep the current password.</li>
+            <li>Record account deactivation reasons in your audit workflow.</li>
+        </ul>
+    </aside>
+</section>

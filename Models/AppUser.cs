@@ -8,6 +8,8 @@ public class AppUser
     public string PasswordHash { get; set; } = string.Empty;
     public UserRole Role { get; set; }
     public bool IsActive { get; set; } = true;
+    public int FailedLoginAttempts { get; set; }
+    public DateTime? LockoutEndUtc { get; set; }
 
     public string CreatedBy { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }

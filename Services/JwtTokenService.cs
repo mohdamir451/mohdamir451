@@ -10,7 +10,9 @@ public class JwtTokenService(IConfiguration configuration) : IJwtTokenService
 {
     public (string token, DateTime expiresAtUtc) GenerateToken(AppUser user)
     {
-        var key = configuration["Jwt:Key"] ?? "SuperSecureDemoKeyForJwtTokenGeneration123!";
+        var key = configuration["Jwt:Key"]
+                  ?? throw new InvalidOperationException("Jwt:Key must be configured securely.");
+
         var issuer = configuration["Jwt:Issuer"] ?? "PDFComparisonUI";
         var audience = configuration["Jwt:Audience"] ?? "PDFComparisonUsers";
         var expiryMinutes = int.TryParse(configuration["Jwt:ExpiryMinutes"], out var configured) ? configured : 30;

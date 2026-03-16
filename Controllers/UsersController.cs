@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,8 @@ using PDFComparisonUI.Services;
 namespace PDFComparisonUI.Controllers;
 
 [Authorize(Policy = "ReviewerOrAdmin")]
-public class UsersController(AppDbContext db, IPasswordService passwordService) : Controller
+public class UsersController(AppDbContext db, IPasswordService passwordService, ILogger<UsersController> logger) : Controller
 {
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -19,21 +19,43 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         return View(users);
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "AdminOnly")]
     [HttpGet]
     public IActionResult Create()
     {
         return View(new UserUpsertRequest { IsActive = true });
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(UserUpsertRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Password))
+        var validationContext = new ValidationContext(request, HttpContext.RequestServices, new Dictionary<object, object?>
         {
-            ModelState.AddModelError(nameof(request.Password), "Password is required.");
+            ["Action"] = "Create"
+        });
+
+        var results = new List<ValidationResult>();
+        if (!Validator.TryValidateObject(request, validationContext, results, true))
+        {
+            foreach (var validationResult in results)
+            {
+                foreach (var memberName in validationResult.MemberNames.DefaultIfEmpty(string.Empty))
+                {
+                    ModelState.AddModelError(memberName, validationResult.ErrorMessage ?? "Validation failed.");
+                }
+            }
+        }
+
+        if (await db.Users.AnyAsync(x => x.UserName == request.UserName))
+        {
+            ModelState.AddModelError(nameof(request.UserName), "Username is already in use.");
+        }
+
+        if (await db.Users.AnyAsync(x => x.Email == request.Email))
+        {
+            ModelState.AddModelError(nameof(request.Email), "Email is already in use.");
         }
 
         if (!ModelState.IsValid)
@@ -42,6 +64,7 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         }
 
         var now = DateTime.UtcNow;
+        var actor = User.Identity?.Name ?? "Admin";
 
         var user = new AppUser
         {
@@ -51,19 +74,20 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
             PasswordHash = passwordService.HashPassword(request.Password!),
             Role = request.Role,
             IsActive = request.IsActive,
-            CreatedBy = "Admin",
+            CreatedBy = actor,
             CreatedDate = now,
-            ModifiedBy = "Admin",
+            ModifiedBy = actor,
             ModifiedDate = now
         };
 
         db.Users.Add(user);
         await db.SaveChangesAsync();
+        logger.LogInformation("User {CreatedUser} created by {Actor}", user.UserName, actor);
 
         return RedirectToAction(nameof(Index));
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "AdminOnly")]
     [HttpGet]
     public async Task<IActionResult> Edit(Guid id)
     {
@@ -82,7 +106,7 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         });
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, UserUpsertRequest request)
@@ -91,6 +115,26 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         if (user is null)
         {
             return NotFound();
+        }
+
+        if (await db.Users.AnyAsync(x => x.Id != id && x.UserName == request.UserName))
+        {
+            ModelState.AddModelError(nameof(request.UserName), "Username is already in use.");
+        }
+
+        if (await db.Users.AnyAsync(x => x.Id != id && x.Email == request.Email))
+        {
+            ModelState.AddModelError(nameof(request.Email), "Email is already in use.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.Password) && !PasswordPolicy.IsStrong(request.Password))
+        {
+            ModelState.AddModelError(nameof(request.Password), PasswordPolicy.RequirementsMessage);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(request);
         }
 
         user.UserName = request.UserName;
@@ -103,14 +147,16 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
             user.PasswordHash = passwordService.HashPassword(request.Password);
         }
 
-        user.ModifiedBy = "Admin";
+        var actor = User.Identity?.Name ?? "Admin";
+        user.ModifiedBy = actor;
         user.ModifiedDate = DateTime.UtcNow;
 
         await db.SaveChangesAsync();
+        logger.LogInformation("User {UserName} updated by {Actor}", user.UserName, actor);
         return RedirectToAction(nameof(Index));
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ToggleStatus(Guid id)
@@ -122,10 +168,11 @@ public class UsersController(AppDbContext db, IPasswordService passwordService) 
         }
 
         user.IsActive = !user.IsActive;
-        user.ModifiedBy = "Admin";
+        user.ModifiedBy = User.Identity?.Name ?? "Admin";
         user.ModifiedDate = DateTime.UtcNow;
         await db.SaveChangesAsync();
 
+        logger.LogInformation("User {UserName} status changed to {IsActive} by {Actor}", user.UserName, user.IsActive, user.ModifiedBy);
         return RedirectToAction(nameof(Index));
     }
 }

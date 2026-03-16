@@ -7,7 +7,7 @@
 <section class="card auth-card premium">
     <div class="auth-card-head">
         <h2>Secure Login</h2>
-        <span class="chip">JWT Enabled</span>
+        <span class="chip">JWT + Cookie</span>
     </div>
     <p class="muted auth-subtitle">Sign in with Username/Email and Password.</p>
 
@@ -17,16 +17,19 @@
     }
 
     <form asp-action="Login" method="post" class="auth-form-grid">
+        @Html.AntiForgeryToken()
         <div asp-validation-summary="ModelOnly" class="alert error"></div>
 
         <div class="auth-field">
             <label asp-for="UserNameOrEmail">Username / Email</label>
             <input asp-for="UserNameOrEmail" placeholder="admin or admin@pdfcompare.local" required />
+            <span asp-validation-for="UserNameOrEmail" class="field-error"></span>
         </div>
 
         <div class="auth-field">
             <label asp-for="Password">Password</label>
             <input asp-for="Password" type="password" placeholder="••••••••" required />
+            <span asp-validation-for="Password" class="field-error"></span>
         </div>
 
         <button type="submit" class="btn btn-primary auth-submit">Login</button>

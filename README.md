@@ -26,6 +26,7 @@ dotnet run
 Default route:
 
 - `/Auth/Login`
+- `/Comparison/Index` (PDF Validation Workbench)
 
 Demo seeded users:
 
@@ -46,3 +47,11 @@ Health endpoints:
 
 - `/health`
 - `/health/ready`
+
+
+Comparison API endpoints:
+
+- `POST /api/comparison/upload-pdf`
+- `POST /api/comparison/compare`
+- `POST /api/comparison/submit`
+- `POST /api/comparison/export-excel`

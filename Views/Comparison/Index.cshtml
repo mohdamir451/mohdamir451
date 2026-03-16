@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "PDF Validation Workbench";
+}
+
+<section class="glass-card comparison-page" aria-labelledby="comparisonTitle">
+    <div class="comparison-header">
+        <div>
+            <p class="eyebrow">Reusable Template</p>
+            <h1 id="comparisonTitle">PDF Validation Workbench</h1>
+            <p class="muted">Upload a PDF, compare API values, correct mismatches, submit validated data, and export an Excel-compatible output.</p>
+        </div>
+    </div>
+
+    <div class="comparison-grid">
+        <section class="comparison-panel" aria-label="PDF upload and viewer panel">
+            <h2>1) Upload & View PDF</h2>
+            <label for="pdfUpload" class="sr-only">Upload PDF file</label>
+            <input id="pdfUpload" type="file" accept="application/pdf" aria-describedby="uploadHelp" />
+            <p id="uploadHelp" class="muted">Only PDF files are supported.</p>
+            <button id="uploadBtn" class="btn btn-primary">Upload PDF</button>
+
+            <div class="viewer-controls" role="group" aria-label="PDF viewer controls">
+                <button id="zoomOutBtn" class="btn btn-outline" aria-label="Zoom out PDF">-</button>
+                <span id="zoomLabel" aria-live="polite">Zoom: 100%</span>
+                <button id="zoomInBtn" class="btn btn-outline" aria-label="Zoom in PDF">+</button>
+                <button id="prevPageBtn" class="btn btn-outline" aria-label="Previous page">Prev</button>
+                <span id="pageStatus" aria-live="polite">Page: 1 / 1</span>
+                <button id="nextPageBtn" class="btn btn-outline" aria-label="Next page">Next</button>
+            </div>
+
+            <div class="pdf-frame-wrap">
+                <iframe id="pdfViewerFrame" title="Uploaded PDF viewer" class="pdf-viewer-frame"></iframe>
+            </div>
+
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite">Awaiting PDF upload.</div>
+        </section>
+
+        <section class="comparison-panel" aria-label="API and comparison panel">
+            <h2>2) Compare & Correct</h2>
+            <p class="muted">Review API values and extracted PDF values side by side with diff highlighting.</p>
+
+            <textarea id="apiJsonInput" rows="10" aria-label="API values JSON input" class="api-json-input">[
+  { "key": "invoice_number", "label": "Invoice Number", "value": "INV-1001", "dataType": "string" },
+  { "key": "invoice_date", "label": "Invoice Date", "value": "2026-01-01", "dataType": "date" },
+  { "key": "amount_due", "label": "Amount Due", "value": "500.00", "dataType": "number" },
+  { "key": "currency", "label": "Currency", "value": "USD", "dataType": "string" }
+]</textarea>
+
+            <div class="comparison-actions">
+                <button id="compareBtn" class="btn btn-primary">Run Comparison</button>
+                <button id="submitBtn" class="btn btn-outline">Submit Validated Data</button>
+                <button id="downloadBtn" class="btn btn-ghost">Download Excel Output</button>
+                <button id="undoBtn" class="btn btn-outline">Undo Last Correction</button>
+            </div>
+
+            <div class="table-wrap">
+                <table id="comparisonTable" aria-label="Side by side comparison table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>API Value</th>
+                            <th>PDF Value</th>
+                            <th>Corrected</th>
+                            <th>Confidence</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script src="~/js/comparison-workbench.js" asp-append-version="true"></script>

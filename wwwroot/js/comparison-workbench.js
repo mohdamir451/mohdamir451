@@ -13,39 +13,10 @@
   const qs = (id) => document.getElementById(id);
   const statusMessage = qs('statusMessage');
   const tableBody = qs('comparisonTable')?.querySelector('tbody');
-  const viewerPanel = document.querySelector('.viewer-panel');
-  const resultsPanel = document.querySelector('.results-panel');
-
-  let panelSyncFrame = null;
 
   const setStatus = (msg) => {
     if (statusMessage) statusMessage.textContent = msg;
   };
-
-  const syncPanelHeights = () => {
-    if (!viewerPanel || !resultsPanel) return;
-    if (window.matchMedia('(max-width: 1100px)').matches) {
-      viewerPanel.style.minHeight = '';
-      resultsPanel.style.minHeight = '';
-      return;
-    }
-
-    viewerPanel.style.minHeight = '';
-    resultsPanel.style.minHeight = '';
-
-    const maxHeight = Math.max(viewerPanel.offsetHeight, resultsPanel.offsetHeight);
-    viewerPanel.style.minHeight = `${maxHeight}px`;
-    resultsPanel.style.minHeight = `${maxHeight}px`;
-  };
-
-  const schedulePanelSync = () => {
-    if (panelSyncFrame !== null) return;
-    panelSyncFrame = window.requestAnimationFrame(() => {
-      panelSyncFrame = null;
-      syncPanelHeights();
-    });
-  };
-
 
   const renderTable = () => {
     if (!tableBody) return;
@@ -88,8 +59,6 @@
         setStatus(`Updated ${field.label}. Change recorded in audit trail.`);
       });
     });
-
-    schedulePanelSync();
   };
 
   const updateViewerUi = () => {
@@ -122,7 +91,6 @@
 
     qs('pdfViewerFrame').src = data.fileUrl;
     setStatus(`Uploaded ${data.fileName}. Ready for comparison.`);
-    schedulePanelSync();
   });
 
   qs('compareBtn')?.addEventListener('click', async () => {
@@ -155,7 +123,6 @@
     renderTable();
 
     setStatus(`Compared ${result.summary.totalFields} fields. Mismatches: ${result.summary.mismatchCount}.`);
-    schedulePanelSync();
   });
 
   qs('undoBtn')?.addEventListener('click', () => {
@@ -169,7 +136,6 @@
     if (field) field.correctedValue = last.oldValue;
     renderTable();
     setStatus('Last correction undone.');
-    schedulePanelSync();
   });
 
   qs('submitBtn')?.addEventListener('click', async () => {
@@ -249,17 +215,5 @@
     if (e.key === 'ArrowLeft') qs('prevPageBtn')?.click();
   });
 
-  if (typeof ResizeObserver !== 'undefined' && (resultsPanel || viewerPanel)) {
-    const resultsResizeObserver = new ResizeObserver(() => {
-      schedulePanelSync();
-    });
-
-    if (resultsPanel) resultsResizeObserver.observe(resultsPanel);
-    if (viewerPanel) resultsResizeObserver.observe(viewerPanel);
-  }
-
-  window.addEventListener('resize', schedulePanelSync);
-
   updateViewerUi();
-  schedulePanelSync();
 })();

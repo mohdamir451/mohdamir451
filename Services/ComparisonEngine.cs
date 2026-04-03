@@ -109,7 +109,6 @@ public class ComparisonEngine : IComparisonEngine
         var isNumericType = string.Equals(dataType, "number", StringComparison.OrdinalIgnoreCase);
         var hasNumericValue = decimal.TryParse(cleaned, NumberStyles.Any, CultureInfo.InvariantCulture, out var numeric);
         if ((isNumericType && hasNumericValue) || hasNumericValue)
-        if (string.Equals(dataType, "number", StringComparison.OrdinalIgnoreCase) || decimal.TryParse(cleaned, NumberStyles.Any, CultureInfo.InvariantCulture, out var numeric))
         {
             return numeric.ToString("0.################", CultureInfo.InvariantCulture);
         }
@@ -117,7 +116,6 @@ public class ComparisonEngine : IComparisonEngine
         var isDateType = string.Equals(dataType, "date", StringComparison.OrdinalIgnoreCase);
         var hasDateValue = DateTime.TryParse(cleaned, CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var date);
         if ((isDateType && hasDateValue) || hasDateValue)
-        if (string.Equals(dataType, "date", StringComparison.OrdinalIgnoreCase) || DateTime.TryParse(cleaned, out var date))
         {
             return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }

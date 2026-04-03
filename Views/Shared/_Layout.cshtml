@@ -3,6 +3,7 @@
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
     var isUsersIndex = currentController == "Users" && currentAction == "Index";
     var isUsersCreate = currentController == "Users" && currentAction == "Create";
+    var isComparisonIndex = currentController == "Comparison" && currentAction == "Index";
 }
 <!doctype html>
 <html lang="en">
@@ -16,22 +17,25 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="app-shell">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-head">
-                <button id="sidebarToggle" class="icon-btn" aria-label="Toggle sidebar">☰</button>
-                <div class="brand">Pulse<span>Ops</span></div>
-            </div>
-            <nav class="sidebar-nav">
-                <a class="@(isUsersIndex ? "active" : "")" asp-controller="Users" asp-action="Index"><span>🏠</span><span class="label">Dashboard</span></a>
-                <a class="@(isUsersCreate ? "active" : "")" asp-controller="Users" asp-action="Create"><span>➕</span><span class="label">Create User</span></a>
-                <a href="#analytics"><span>📈</span><span class="label">Analytics</span></a>
-                <a href="#users"><span>👥</span><span class="label">Users</span></a>
-                <a href="#activity"><span>🕘</span><span class="label">Activity</span></a>
-                <a asp-controller="Comparison" asp-action="Index"><span>🧾</span><span class="label">PDF Compare</span></a>
-                <a asp-controller="Auth" asp-action="Login"><span>🔐</span><span class="label">Auth</span></a>
-            </nav>
-        </aside>
+    <div class="app-shell @(isComparisonIndex ? "no-sidebar" : string.Empty)">
+        @if (!isComparisonIndex)
+        {
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-head">
+                    <button id="sidebarToggle" class="icon-btn" aria-label="Toggle sidebar">☰</button>
+                    <div class="brand">Pulse<span>Ops</span></div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a class="@(isUsersIndex ? "active" : "")" asp-controller="Users" asp-action="Index"><span>🏠</span><span class="label">Dashboard</span></a>
+                    <a class="@(isUsersCreate ? "active" : "")" asp-controller="Users" asp-action="Create"><span>➕</span><span class="label">Create User</span></a>
+                    <a href="#analytics"><span>📈</span><span class="label">Analytics</span></a>
+                    <a href="#users"><span>👥</span><span class="label">Users</span></a>
+                    <a href="#activity"><span>🕘</span><span class="label">Activity</span></a>
+                    <a asp-controller="Comparison" asp-action="Index"><span>🧾</span><span class="label">PDF Compare</span></a>
+                    <a asp-controller="Auth" asp-action="Login"><span>🔐</span><span class="label">Auth</span></a>
+                </nav>
+            </aside>
+        }
 
         <div class="workspace">
             <header class="topbar">
